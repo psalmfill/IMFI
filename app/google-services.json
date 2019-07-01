@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "401175958065",
+    "firebase_url": "https://imfiresultsystem.firebaseio.com",
+    "project_id": "imfiresultsystem",
+    "storage_bucket": "imfiresultsystem.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401175958065:android:f34519b02b275348",
+        "android_client_info": {
+          "package_name": "com.samfieldhawb.imfiresultcalculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "401175958065-c2icmdp64g6757gqvidbe4j7hgebnrku.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.samfieldhawb.imfiresultcalculator",
+            "certificate_hash": "41975eacf5884b3d770d814b1868e067adf187ae"
+          }
+        },
+        {
+          "client_id": "401175958065-33a9nrp6o9ako7v4ivg3457cdjq60ri9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDw2bc_rxagm4eH8Nw4I-p15cZoiibsdbQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "401175958065-33a9nrp6o9ako7v4ivg3457cdjq60ri9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
