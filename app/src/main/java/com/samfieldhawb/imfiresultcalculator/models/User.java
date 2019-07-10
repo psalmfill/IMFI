@@ -16,22 +16,22 @@ public class User {
 
     private String registrationNumber;
 
-//    private String faculty;
+//    private String faculty_code;
 //
-//    private String department;
+//    private String department_code;
 
     private String mode;
 
     private String role;
 
-    private Faculty faculty;
+    private String faculty_code;
 
-    private Department department;
+    private String department_code;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String middleName, String gender, String phoneNumber, String email, String registrationNumber, Faculty faculty, Department department, String mode, String role) {
+    public User(String firstName, String lastName, String middleName, String gender, String phoneNumber, String email, String registrationNumber, String faculty_code, String department_code, String mode, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;
@@ -39,8 +39,8 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.registrationNumber = registrationNumber;
-        this.faculty = faculty;
-        this.department = department;
+        this.faculty_code = faculty_code;
+        this.department_code = department_code;
         this.mode = mode;
         this.role = role;
     }
@@ -101,20 +101,20 @@ public class User {
         this.registrationNumber = registrationNumber;
     }
 
-    public Faculty getFaculty() {
-        return faculty;
+    public String getFaculty_code() {
+        return faculty_code;
     }
 
-    public void setFaculty(Faculty faculty) {
-        this.faculty = faculty;
+    public void setFaculty_code(String faculty_code) {
+        this.faculty_code = faculty_code;
     }
 
-    public Department getDepartment() {
-        return department;
+    public String getDepartment_code() {
+        return department_code;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setDepartment_code(String department_code) {
+        this.department_code = department_code;
     }
 
     public String getMode() {

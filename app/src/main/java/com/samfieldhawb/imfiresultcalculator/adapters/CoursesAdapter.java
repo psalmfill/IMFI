@@ -3,6 +3,7 @@ package com.samfieldhawb.imfiresultcalculator.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,12 +53,14 @@ public class CoursesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public void setCourses(List<Course> courses){
-        mCourses.clear();
+//        mCourses.clear();
         mCourses = courses;
 notifyDataSetChanged();
 //        for(Course course : courses){
 //            addCourse(course);
 //        }
+
+        Log.d("list ",mCourses.toString());
     }
 
     public void addCourse(Course course){

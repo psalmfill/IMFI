@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ public class RegisterCoursesFragment extends Fragment implements CoursesAdapter.
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
+    DatabaseReference getCourse ;
     User user;
     String userId = "";
     FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
@@ -72,6 +74,8 @@ public class RegisterCoursesFragment extends Fragment implements CoursesAdapter.
             }
         }
     };
+
+    ValueEventListener valueEventListener;
 
 
     public RegisterCoursesFragment() {
@@ -89,20 +93,23 @@ public class RegisterCoursesFragment extends Fragment implements CoursesAdapter.
         selectedCourses = new ArrayList<>();
         mLevels = new ArrayList<>();
         mSemesters = new ArrayList<>();
-        mAdapter = new CoursesAdapter(getContext(),mCourses,this);
         mCourseCount = view.findViewById(R.id.course_total);
         mUnitCount = view.findViewById(R.id.unit_total);
         mLevelSp = view.findViewById(R.id.level_sp);
+
+        mAdapter = new CoursesAdapter(getContext(),mCourses,this);
         mSemesterSp = view.findViewById(R.id.semester_sp);
         mRecyclerView = view.findViewById(R.id.course_reg_view);
         mRegisterCourse = view.findViewById(R.id.register_courses);
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setAdapter(mAdapter);
         mRegisterCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 doRegisterCourses();
             }
         });
-        setupRv();
         databaseReference.child("Levels").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -141,7 +148,9 @@ public class RegisterCoursesFragment extends Fragment implements CoursesAdapter.
         mLevelSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                addCourse();
+                addCourse(user.getFaculty_code().toLowerCase(), user.getDepartment_code().toLowerCase(),
+                        getLevelId(mLevelSp.getSelectedItem().toString()),
+                        getSemesterId(mSemesterSp.getSelectedItem().toString()));
             }
 
             @Override
@@ -153,7 +162,9 @@ public class RegisterCoursesFragment extends Fragment implements CoursesAdapter.
         mSemesterSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                addCourse();
+                addCourse(user.getFaculty_code().toLowerCase(), user.getDepartment_code().toLowerCase(),
+                        getLevelId(mLevelSp.getSelectedItem().toString()),
+                        getSemesterId(mSemesterSp.getSelectedItem().toString()));
             }
 
             @Override
@@ -165,10 +176,9 @@ public class RegisterCoursesFragment extends Fragment implements CoursesAdapter.
         return view;
     }
 
-    private void setupRv() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        mAdapter.setCourses(mCourses);
-        mRecyclerView.setAdapter(mAdapter);
+    private void setupRv(List<Course> courses) {
+        mAdapter.setCourses(courses);
+        getCourse.removeEventListener(valueEventListener);
     }
 
     private void requestUser() {
@@ -186,39 +196,39 @@ public class RegisterCoursesFragment extends Fragment implements CoursesAdapter.
         });
     }
 
-    public void addCourse(){
+
+    public void addCourse(String facultyCode,String departmentCode,String level,String semester){
+
+        valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mCourses.clear();
+                for(DataSnapshot course : dataSnapshot.getChildren())
+                    mCourses.add(course.getValue(Course.class));
+                setupRv(mCourses);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
         if(user !=null){
-            databaseReference.child("Courses")
-                    .child(
-                            user.getFaculty().getShort_code().toLowerCase()
-//                            "nid"
+            getCourse =  databaseReference.child("Courses").child(
+                            facultyCode
                     )
                     .child(
-                            user.getDepartment().getShort_code().toLowerCase()
+                           departmentCode
                     )
                     .child(
-                            mLevels.size() >0? getLevelId(mLevelSp.getSelectedItem().toString()):"level100"
+                            level
                     )
                     .child(
+                        semester
+                    );
+          getCourse.addListenerForSingleValueEvent(valueEventListener);
 
-                            mSemesters.size() >1? getSemesterId(mSemesterSp.getSelectedItem().toString()):"fs"
-                    ).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for(DataSnapshot course : dataSnapshot.getChildren()){
-
-                        mCourses.add(course.getValue(Course.class));
-                    }
-//                    mAdapter.setCourses(mCourses);
-//                    mAdapter.notifyDataSetChanged();
-                    setupRv();
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
         }
 
     }
@@ -248,6 +258,7 @@ public class RegisterCoursesFragment extends Fragment implements CoursesAdapter.
         for(Level level: mLevels){
             if (level.getName().equals(name)){
                 return level.getShort_code().toLowerCase();
+
             }
         }
         return null;
@@ -265,8 +276,8 @@ public class RegisterCoursesFragment extends Fragment implements CoursesAdapter.
 
     public void doRegisterCourses (){
         DatabaseReference registerCourseRef = databaseReference.child("RegisteredCourses");
-        DatabaseReference mCourseRefer = registerCourseRef.child(user.getFaculty().getShort_code().toLowerCase())
-                .child(user.getDepartment().getShort_code().toLowerCase())
+        DatabaseReference mCourseRefer = registerCourseRef.child(user.getFaculty_code().toLowerCase())
+                .child(user.getDepartment_code().toLowerCase())
                 .child(getLevelId(mLevelSp.getSelectedItem().toString()))
                 .child(getSemesterId(mSemesterSp.getSelectedItem().toString()))
                 .child(userId);

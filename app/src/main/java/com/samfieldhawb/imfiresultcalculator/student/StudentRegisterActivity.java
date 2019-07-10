@@ -176,7 +176,7 @@ public class StudentRegisterActivity extends AppCompatActivity {
         mModeButton =findViewById(selectedId);
         mMode = mModeButton.getText().toString().trim();
 
-        final User user = new User(mFirstName,mLastName,mMiddleName,mGender,mPhoneNumber,mEmail,mRegNo,facultyObj,departmentObj, mMode,"Student");
+        final User user = new User(mFirstName,mLastName,mMiddleName,mGender,mPhoneNumber,mEmail,mRegNo,facultyObj.getShort_code(),departmentObj.getShort_code(), mMode,"Student");
         Toast.makeText(this,mDepartment,Toast.LENGTH_LONG).show();
         if(validate()){
             mAuth.createUserWithEmailAndPassword(mEmail,mPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
