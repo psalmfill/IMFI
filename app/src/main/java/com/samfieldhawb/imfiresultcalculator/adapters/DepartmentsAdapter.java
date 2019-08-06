@@ -54,9 +54,9 @@ public class DepartmentsAdapter  extends RecyclerView.Adapter<DepartmentsAdapter
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Intent intent = new Intent(mContext.getApplicationContext(), LecturerHomeActivity.class);
-//                    intent.putExtra(LecturerHomeActivity.DEPARTMENT,mDepartmentList.get(getAdapterPosition()).getShort_code().toLowerCase());
-//                    mContext.startActivity(intent);
+                    Intent intent = new Intent(mContext.getApplicationContext(), LecturerHomeActivity.class);
+                    intent.putExtra(LecturerHomeActivity.DEPARTMENT,departmentList.get(getAdapterPosition()).getShort_code().toLowerCase());
+                    mContext.startActivity(intent);
                 }
             });
         }

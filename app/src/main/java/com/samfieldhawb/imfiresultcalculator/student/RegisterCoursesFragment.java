@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -148,9 +147,11 @@ public class RegisterCoursesFragment extends Fragment implements CoursesAdapter.
         mLevelSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                addCourse(user.getFaculty_code().toLowerCase(), user.getDepartment_code().toLowerCase(),
-                        getLevelId(mLevelSp.getSelectedItem().toString()),
-                        getSemesterId(mSemesterSp.getSelectedItem().toString()));
+                if(user != null){
+                    addCourse(user.getFacultyCode().toLowerCase(), user.getDepartmentCode().toLowerCase(),
+                            getLevelId(mLevelSp.getSelectedItem().toString()),
+                            getSemesterId(mSemesterSp.getSelectedItem().toString()));
+                }
             }
 
             @Override
@@ -162,9 +163,11 @@ public class RegisterCoursesFragment extends Fragment implements CoursesAdapter.
         mSemesterSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                addCourse(user.getFaculty_code().toLowerCase(), user.getDepartment_code().toLowerCase(),
-                        getLevelId(mLevelSp.getSelectedItem().toString()),
-                        getSemesterId(mSemesterSp.getSelectedItem().toString()));
+                if(user != null){
+                    addCourse(user.getFacultyCode().toLowerCase(), user.getDepartmentCode().toLowerCase(),
+                            getLevelId(mLevelSp.getSelectedItem().toString()),
+                            getSemesterId(mSemesterSp.getSelectedItem().toString()));
+                }
             }
 
             @Override
@@ -276,8 +279,8 @@ public class RegisterCoursesFragment extends Fragment implements CoursesAdapter.
 
     public void doRegisterCourses (){
         DatabaseReference registerCourseRef = databaseReference.child("RegisteredCourses");
-        DatabaseReference mCourseRefer = registerCourseRef.child(user.getFaculty_code().toLowerCase())
-                .child(user.getDepartment_code().toLowerCase())
+        DatabaseReference mCourseRefer = registerCourseRef.child(user.getFacultyCode().toLowerCase())
+                .child(user.getDepartmentCode().toLowerCase())
                 .child(getLevelId(mLevelSp.getSelectedItem().toString()))
                 .child(getSemesterId(mSemesterSp.getSelectedItem().toString()))
                 .child(userId);

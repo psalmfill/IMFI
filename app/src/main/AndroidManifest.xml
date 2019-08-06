@@ -9,10 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".student.LevelActivity"></activity>
+        <activity android:name=".student.SemesterActivity" />
         <activity
             android:name=".student.StudentActivity"
             android:label="@string/title_activity_student"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".lecturer.LecturerHomeActivity"
             android:label="@string/title_activity_lecturer_home"

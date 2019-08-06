@@ -43,6 +43,11 @@ public class ResultDisplayAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return mCourses != null?mCourses.size():0;
     }
+
+    public void setCourses(List<Course> courses){
+        mCourses = courses;
+        notifyDataSetChanged();
+    }
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView code,title, unit,score,grade;
         public ViewHolder(@NonNull View itemView) {
