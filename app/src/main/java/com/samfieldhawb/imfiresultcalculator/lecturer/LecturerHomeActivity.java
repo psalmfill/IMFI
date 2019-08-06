@@ -40,6 +40,8 @@ public class LecturerHomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     public static final String DEPARTMENT = "department";
     public static final String FACULTY = "faculty";
+    public static final String LEVEL = "level";
+    public static final String SEMESTER = "semester";
     Fragment fragment;
 
     @Override
@@ -67,16 +69,50 @@ public class LecturerHomeActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         if(intent !=null){
+
+            if (intent.hasExtra(SEMESTER)){
+                Bundle bundle = new Bundle();
+                bundle.putString(SEMESTER,intent.getStringExtra(SEMESTER));
+                bundle.putString(LEVEL,intent.getStringExtra(LEVEL));
+                bundle.putString(DEPARTMENT,intent.getStringExtra(DEPARTMENT));
+                bundle.putString(FACULTY,intent.getStringExtra(FACULTY));
+                fragment = new StudentFragment();
+                fragment.setArguments(bundle);
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.fag_container, fragment);
+                ft.commit();
+            }else
+            if (intent.hasExtra(LEVEL)){
+                Bundle bundle = new Bundle();
+                bundle.putString(LEVEL,intent.getStringExtra(LEVEL));
+                bundle.putString(DEPARTMENT,intent.getStringExtra(DEPARTMENT));
+                bundle.putString(FACULTY,intent.getStringExtra(FACULTY));
+                fragment = new SemesterFragment();
+                fragment.setArguments(bundle);
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.fag_container, fragment);
+                ft.commit();
+            }else
             if (intent.hasExtra(DEPARTMENT)){
                 Bundle bundle = new Bundle();
                 bundle.putString(DEPARTMENT,intent.getStringExtra(DEPARTMENT));
+                bundle.putString(FACULTY,intent.getStringExtra(FACULTY));
+                fragment = new LevelFragment();
+                fragment.setArguments(bundle);
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.fag_container, fragment);
+                ft.commit();
+            }else
+
+            if (intent.hasExtra(FACULTY)){
+                Bundle bundle = new Bundle();
+                bundle.putString(FACULTY,intent.getStringExtra(FACULTY));
                 fragment = new DepartmentFragment();
                 fragment.setArguments(bundle);
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.fag_container, fragment);
                 ft.commit();
             }
-
 
         }
 

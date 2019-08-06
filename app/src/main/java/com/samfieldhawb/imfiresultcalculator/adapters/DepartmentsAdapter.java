@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.samfieldhawb.imfiresultcalculator.R;
+import com.samfieldhawb.imfiresultcalculator.helpers.OnClickListener;
 import com.samfieldhawb.imfiresultcalculator.lecturer.LecturerHomeActivity;
 import com.samfieldhawb.imfiresultcalculator.models.Department;
 
@@ -19,9 +20,11 @@ public class DepartmentsAdapter  extends RecyclerView.Adapter<DepartmentsAdapter
     Context mContext;
     List<Department> departmentList;
 
-    public DepartmentsAdapter(Context mContext, List<Department> departmentList) {
+    OnClickListener listener;
+    public DepartmentsAdapter(Context mContext, List<Department> departmentList,OnClickListener listener) {
         this.mContext = mContext;
         this.departmentList = departmentList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -54,9 +57,7 @@ public class DepartmentsAdapter  extends RecyclerView.Adapter<DepartmentsAdapter
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext.getApplicationContext(), LecturerHomeActivity.class);
-                    intent.putExtra(LecturerHomeActivity.DEPARTMENT,departmentList.get(getAdapterPosition()).getShort_code().toLowerCase());
-                    mContext.startActivity(intent);
+                   listener.onClick(departmentList.get(getAdapterPosition()).getShort_code());
                 }
             });
         }

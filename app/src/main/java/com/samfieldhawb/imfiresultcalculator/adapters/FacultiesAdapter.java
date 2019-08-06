@@ -58,7 +58,7 @@ public class FacultiesAdapter  extends RecyclerView.Adapter<FacultiesAdapter.Fac
              @Override
              public void onClick(View v) {
                  Intent intent = new Intent(mContext.getApplicationContext(), LecturerHomeActivity.class);
-                 intent.putExtra(LecturerHomeActivity.DEPARTMENT,mFaculties.get(getAdapterPosition()).getShort_code().toLowerCase());
+                 intent.putExtra(LecturerHomeActivity.FACULTY,mFaculties.get(getAdapterPosition()).getShort_code().toLowerCase());
                  mContext.startActivity(intent);
              }
          });

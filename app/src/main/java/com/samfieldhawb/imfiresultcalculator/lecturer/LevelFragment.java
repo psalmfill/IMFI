@@ -20,7 +20,6 @@ import com.samfieldhawb.imfiresultcalculator.R;
 import com.samfieldhawb.imfiresultcalculator.adapters.DepartmentsAdapter;
 import com.samfieldhawb.imfiresultcalculator.helpers.OnClickListener;
 import com.samfieldhawb.imfiresultcalculator.models.Department;
-import com.samfieldhawb.imfiresultcalculator.models.Faculty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,17 +27,17 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DepartmentFragment extends Fragment implements OnClickListener {
-    RecyclerView departmmentsRv;
-    DepartmentsAdapter departmentsAdapter;
-    List<Department> departmentList;
+public class LevelFragment extends Fragment implements OnClickListener {
+    RecyclerView levelRv;
+    DepartmentsAdapter LevelAdapter;
+    List<Department> LevelList;
 
     private FirebaseDatabase firebaseDatabase;
 
     private DatabaseReference databaseReference;
 
     private String faculty, department;
-    public DepartmentFragment() {
+    public LevelFragment() {
         // Required empty public constructor
     }
 
@@ -47,16 +46,17 @@ public class DepartmentFragment extends Fragment implements OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         faculty  = getArguments().getString(LecturerHomeActivity.FACULTY);
+        department  = getArguments().getString(LecturerHomeActivity.DEPARTMENT);
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_department, container, false);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference().child("Departments").child(faculty);
-        departmmentsRv =  view.findViewById(R.id.department_rv);
+        databaseReference = firebaseDatabase.getReference().child("Levels");
+        levelRv =  view.findViewById(R.id.department_rv);
         getData();
-        departmentList = new ArrayList<>();
-        departmentsAdapter = new DepartmentsAdapter(getContext(), departmentList, this);
-        departmmentsRv.setAdapter(departmentsAdapter);
-        departmmentsRv.setLayoutManager(new LinearLayoutManager(getContext()));
+        LevelList = new ArrayList<>();
+        LevelAdapter = new DepartmentsAdapter(getContext(), LevelList, this);
+        levelRv.setAdapter(LevelAdapter);
+        levelRv.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return view;
     }
@@ -65,10 +65,10 @@ public class DepartmentFragment extends Fragment implements OnClickListener {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
-                    departmentList.add(d.getValue(Department.class));
+                    LevelList.add(d.getValue(Department.class));
                 }
 
-                departmentsAdapter.setDepartmentList(departmentList);
+                LevelAdapter.setDepartmentList(LevelList);
             }
 
             @Override
@@ -82,7 +82,8 @@ public class DepartmentFragment extends Fragment implements OnClickListener {
     public void onClick(String value) {
         Intent intent = new Intent(getContext(), LecturerHomeActivity.class);
         intent.putExtra(LecturerHomeActivity.FACULTY,faculty);
-        intent.putExtra(LecturerHomeActivity.DEPARTMENT,value);
+        intent.putExtra(LecturerHomeActivity.DEPARTMENT,department);
+        intent.putExtra(LecturerHomeActivity.LEVEL,value);
         startActivity(intent);
     }
 }

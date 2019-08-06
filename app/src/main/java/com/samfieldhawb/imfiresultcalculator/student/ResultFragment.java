@@ -94,7 +94,6 @@ public class ResultFragment extends Fragment {
         mDisplayAdapter = new ResultDisplayAdapter(getContext(),mCourseList);
         mRecyclerView.setAdapter(mDisplayAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mGpa.setText(String.format("%.2f",calculateGPA()));
         databaseReference.child("Levels").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -184,6 +183,8 @@ public void addCourse(String facultyCode,String departmentCode,String level,Stri
                 Toast.makeText(getContext(),"No result Available",Toast.LENGTH_LONG).show();
             }
             mDisplayAdapter.setCourses(mCourseList);
+
+            mGpa.setText(String.format("%.2f",calculateGPA()));
         }
 
         @Override
@@ -207,6 +208,7 @@ public void addCourse(String facultyCode,String departmentCode,String level,Stri
         getCourse.addListenerForSingleValueEvent(valueEventListener);
 
     }
+
 }
 
     private void requestUser() {
