@@ -3,11 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="8dp"
     android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:src="@drawable/ic_account_circle_black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -15,21 +16,23 @@
             android:orientation="vertical"
             android:layout_gravity="center">
             <TextView
-                android:id="@+id/student_name"
+                android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="samfield Hawb Bassey"/>
+                android:text="samfield Hawb Bassey"
+                android:textColor="@color/colorPrimary"/>
             <TextView
-                android:id="@+id/student_department"
+                android:id="@+id/regNum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Computer Engineering"/>
+                android:text="17/jdk/sxs"/>
             <TextView
-                android:id="@+id/student_faculty"
+                android:id="@+id/faculty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Engineering"/>
+                android:text="Engineering"
+                android:textStyle="bold"/>
         </LinearLayout>
 
 </LinearLayout>

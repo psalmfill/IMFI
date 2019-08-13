@@ -63,8 +63,8 @@ public class RegisterCoursesFragment extends Fragment implements CoursesAdapter.
     FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
         @Override
         public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-            userId = firebaseAuth.getUid();
-            if (userId !=null) {
+            if (firebaseAuth.getCurrentUser() !=null) {
+                userId = firebaseAuth.getUid();
                 if (!userId.equals("")) {
                     requestUser();
                 }

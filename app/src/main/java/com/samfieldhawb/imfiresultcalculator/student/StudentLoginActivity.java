@@ -88,6 +88,8 @@ public class StudentLoginActivity extends AppCompatActivity {
                                 }
                                 else {
                                     mErrorMessage.setText("You are not a Registered Student");
+                                    mErrorMessage.setVisibility(View.VISIBLE);
+
                                 }
                             }
 
@@ -103,11 +105,17 @@ public class StudentLoginActivity extends AppCompatActivity {
                 }else {
                     mErrorMessage.setText(task.getException().getMessage());
                     mProgressBar.setVisibility(View.GONE);
+                    mErrorMessage.setVisibility(View.VISIBLE);
+
 
                 }
             }
         });
 
 
+    }
+
+    public void showRegister(View view){
+        startActivity(new Intent(this, StudentRegisterActivity.class));
     }
 }

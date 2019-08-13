@@ -3,39 +3,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".student.ResultFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Level" />
-
-        <Spinner
-            android:id="@+id/level_sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Semester" />
-
-        <Spinner
-            android:id="@+id/semester_sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Level" />
+
+            <Spinner
+                android:id="@+id/level_sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Semester" />
+
+            <Spinner
+                android:id="@+id/semester_sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp" />
+            <Button
+                android:id="@+id/check_result_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Check Result"
+                android:textColor="@android:color/white"
+                android:background="@color/colorPrimary"
+                />
+        </LinearLayout>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/result_rv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/single_course_result_row">
+
+            </android.support.v7.widget.RecyclerView>
+        </HorizontalScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="32dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -53,20 +82,8 @@
                 android:textColor="@color/colorPrimary"
                 android:layout_weight="1" />
         </LinearLayout>
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/result_rv"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                tools:listitem="@layout/single_course_result_row">
-
-            </android.support.v7.widget.RecyclerView>
-        </HorizontalScrollView>
     </LinearLayout>
+
 
 
 </FrameLayout>

@@ -54,4 +54,22 @@
     <string name="register_courses">Register Courses</string>
     <string name="check_result">Check Result</string>
     <string name="profile">Profile</string>
+    <string name="create_an_account">Create an Account</string>
+    <string name="login">Login</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="register">Register</string>
+    <string name="full_time">Full Time</string>
+    <string name="part_time">Part Time</string>
+    <string name="department">Department</string>
+    <string name="mode">Mode</string>
+    <string name="password">Password</string>
+    <string name="faculty">Faculty</string>
+    <string name="gender">Gender</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="last_name">Last Name</string>
+    <string name="middle_name">Middle Name</string>
+    <string name="first_name">First Name</string>
+    <string name="lecturer_id">Lecturer ID</string>
+    <string name="registration_number">Registration Number</string>
+    <string name="student">Student</string>
 </resources>

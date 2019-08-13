@@ -57,7 +57,7 @@ public class SemestersAdapter extends RecyclerView.Adapter<SemestersAdapter.Seme
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   listener.onClick(semesterList.get(getAdapterPosition()).getShort_code());
+                   listener.onClick(semesterList.get(getAdapterPosition()).getShort_code().toLowerCase());
                 }
             });
         }

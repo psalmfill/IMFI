@@ -63,14 +63,16 @@ public class LecturerLoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    mDbRef.child(mAuth.getUid()).addValueEventListener(new ValueEventListener() {
+                    mDbRef.child(mAuth.getUid()).child("role").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             String role = dataSnapshot.getValue(String.class);
-                            if(!role.isEmpty() && role.equals("lecturer")){
+                            if(!role.isEmpty() && role.equals("Lecturer")){
                                 startLecturerHome();
                             }else{
                                 mErrorMessage.setText("Unrecognized Staff");
+                                mErrorMessage.setVisibility(View.VISIBLE);
+
                             }
                         }
 
@@ -81,6 +83,7 @@ public class LecturerLoginActivity extends AppCompatActivity {
                     });
                 }else {
                     mErrorMessage.setText(task.getException().getMessage());
+                    mErrorMessage.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -88,6 +91,10 @@ public class LecturerLoginActivity extends AppCompatActivity {
     }
 
     public void startLecturerHome(){
-        startActivity(new Intent(getApplicationContext(),LecturerLoginActivity.class));
+        startActivity(new Intent(getApplicationContext(),LecturerHomeActivity.class));
+    }
+    public void showLecturerRegister(View view){
+
+        startActivity(new Intent(this,LecturerRegisterActivity.class));
     }
 }

@@ -46,6 +46,7 @@ public class ResultInputAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         holder.code.setText(course.getCode());
         holder.unit.setText(String.valueOf(course.getCredit_unit()));
         holder.grade.setText(course.getGrade());
+        holder.mScoreField.setText(String.valueOf(course.getScore()));
     }
 
     @Override
@@ -53,6 +54,10 @@ public class ResultInputAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return mCourses !=null?mCourses.size():0;
     }
 
+    public void setCourses(List<Course> courses){
+        mCourses = courses;
+        notifyDataSetChanged();
+    }
     class CourseHolder extends RecyclerView.ViewHolder {
         private TextView code,title, unit,grade;
         private EditText mScoreField;

@@ -1,12 +1,11 @@
-package com.samfieldhawb.imfiresultcalculator.student;
+package com.samfieldhawb.imfiresultcalculator.lecturer;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -29,17 +28,16 @@ import com.samfieldhawb.imfiresultcalculator.R;
 import com.samfieldhawb.imfiresultcalculator.models.Department;
 import com.samfieldhawb.imfiresultcalculator.models.Faculty;
 import com.samfieldhawb.imfiresultcalculator.models.User;
+import com.samfieldhawb.imfiresultcalculator.student.StudentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentRegisterActivity extends AppCompatActivity {
+public class LecturerRegisterActivity extends AppCompatActivity {
     public static String ROLE = "Student";
     private  Spinner mFaculties,mDepartments,mGenders;
     private ArrayAdapter mAdapter;
     private Button mRegisterButton;
-    private RadioGroup mModeRB;
-    private RadioButton mModeButton;
     private EditText mRegNoField, mFirstNameField, mMiddleNameField, mLastNameField, mEmailField,mPasswordField, mPhoneField;
 
     private ArrayAdapter mFacultiesAdapter;
@@ -70,7 +68,7 @@ public class StudentRegisterActivity extends AppCompatActivity {
             for(DataSnapshot mFac : dataSnapshot.getChildren()){
                 facultyObj = mFac.getValue(Faculty.class);
                 mFacultiesList.add(facultyObj);
-                mFacultiesAdapter = new ArrayAdapter<Faculty>(StudentRegisterActivity.this,android.R.layout.simple_list_item_1,mFacultiesList);
+                mFacultiesAdapter = new ArrayAdapter<Faculty>(LecturerRegisterActivity.this,android.R.layout.simple_list_item_1,mFacultiesList);
                 mFaculties.setAdapter(mFacultiesAdapter);
             }
             // ...
@@ -86,7 +84,7 @@ public class StudentRegisterActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_register);
+        setContentView(R.layout.activity_lecturer_register);
          mAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
         mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mAuth = FirebaseAuth.getInstance();
@@ -107,7 +105,6 @@ public class StudentRegisterActivity extends AppCompatActivity {
         mFaculties = findViewById(R.id.faculties);
         mDepartments = findViewById(R.id.department);
         mGenders = findViewById(R.id.gender);
-        mModeRB = findViewById(R.id.mode);
         mRegisterButton = findViewById(R.id.register_button);
         //EditText initialization
         mRegNoField = findViewById(R.id.reg_no);
@@ -137,7 +134,7 @@ public class StudentRegisterActivity extends AppCompatActivity {
                         for(DataSnapshot dep : dataSnapshot.getChildren()){
                             departmentObj = dep.getValue(Department.class);
                             mDepartmentList.add(departmentObj);
-                            mAdapter = new ArrayAdapter<>(StudentRegisterActivity.this,android.R.layout.simple_list_item_1,mDepartmentList);
+                            mAdapter = new ArrayAdapter<>(LecturerRegisterActivity.this,android.R.layout.simple_list_item_1,mDepartmentList);
                             mDepartments.setAdapter(mAdapter);
                         }
                     }
@@ -169,14 +166,8 @@ public class StudentRegisterActivity extends AppCompatActivity {
         mFaculty = mFaculties.getSelectedItem().toString();
         mGender = mGenders.getSelectedItem().toString();
 
-        int selectedId = mModeRB.getCheckedRadioButtonId();
 
-        // find the radiobutton by returned id
-
-        mModeButton =findViewById(selectedId);
-        mMode = mModeButton.getText().toString().trim();
-
-        final User user = new User(mFirstName,mLastName,mMiddleName,mGender,mPhoneNumber,mEmail,mRegNo,facultyObj.getShort_code(),departmentObj.getShort_code(), mMode,"Student");
+        final User user = new User(mFirstName,mLastName,mMiddleName,mGender,mPhoneNumber,mEmail,mRegNo,facultyObj.getShort_code(),departmentObj.getShort_code(), mMode,"Lecturer");
         Toast.makeText(this,mDepartment,Toast.LENGTH_LONG).show();
         if(validate()){
             mAuth.createUserWithEmailAndPassword(mEmail,mPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -240,7 +231,7 @@ public class StudentRegisterActivity extends AppCompatActivity {
         return "";
     }
 
-    public void startStudentLogin(View view){
-        startActivity(new Intent(this,StudentLoginActivity.class));
+    public void startLecturerLogin(View view){
+        startActivity(new Intent(this, LecturerLoginActivity.class));
     }
 }

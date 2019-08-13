@@ -56,7 +56,7 @@ public class LevelsAdapter extends RecyclerView.Adapter<LevelsAdapter.LevelHolde
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   listener.onClick(levelList.get(getAdapterPosition()).getShort_code());
+                   listener.onClick(levelList.get(getAdapterPosition()).getShort_code().toLowerCase());
                 }
             });
         }

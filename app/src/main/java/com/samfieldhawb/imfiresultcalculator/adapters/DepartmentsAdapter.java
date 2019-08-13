@@ -57,7 +57,7 @@ public class DepartmentsAdapter  extends RecyclerView.Adapter<DepartmentsAdapter
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   listener.onClick(departmentList.get(getAdapterPosition()).getShort_code());
+                   listener.onClick(departmentList.get(getAdapterPosition()).getShort_code().toLowerCase());
                 }
             });
         }

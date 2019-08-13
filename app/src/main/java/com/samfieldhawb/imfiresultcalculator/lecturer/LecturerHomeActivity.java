@@ -22,12 +22,12 @@ import android.view.Menu;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.samfieldhawb.imfiresultcalculator.ExpandableListHelper;
 import com.samfieldhawb.imfiresultcalculator.R;
 import com.samfieldhawb.imfiresultcalculator.adapters.FacultiesAdapter;
 import com.samfieldhawb.imfiresultcalculator.models.Faculty;
@@ -42,6 +42,8 @@ public class LecturerHomeActivity extends AppCompatActivity
     public static final String FACULTY = "faculty";
     public static final String LEVEL = "level";
     public static final String SEMESTER = "semester";
+    FirebaseAuth firebaseAuth;
+    FirebaseAuth.AuthStateListener authStateListener ;
     Fragment fragment;
 
     @Override
@@ -66,7 +68,15 @@ public class LecturerHomeActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
+        firebaseAuth = FirebaseAuth.getInstance();
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseAuth.getCurrentUser() == null){
+                    startActivity(new Intent(getApplicationContext(),LecturerLoginActivity.class));
+                }
+            }
+        };
         Intent intent = getIntent();
         if(intent !=null){
 
@@ -112,15 +122,23 @@ public class LecturerHomeActivity extends AppCompatActivity
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.fag_container, fragment);
                 ft.commit();
+            }else {
+                fragment = new FacultiesFragment();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.fag_container, fragment);
+                ft.commit();
             }
+
 
         }
 
     }
 
-
-
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        firebaseAuth.addAuthStateListener(authStateListener);
+    }
 
     @Override
     public void onBackPressed() {
@@ -162,7 +180,10 @@ public class LecturerHomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             fragment = new FacultiesFragment();
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_logout) {
+            firebaseAuth.signOut();
+            startActivity(new Intent(this,LecturerLoginActivity.class));
+
 
         } else if (id == R.id.nav_slideshow) {
 
